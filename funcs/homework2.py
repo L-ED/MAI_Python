@@ -73,7 +73,7 @@ def take_drones_models(filepath):
 
 
 # вывод результата (допишите код)
-# print(f'Полеты совершались на дронах следующих моделей: {", ".join(take_drones_models(filepath))}')
+print(f'Полеты совершались на дронах следующих моделей: {", ".join(take_drones_models(filepath))}')
 
 # TODO 2-3) Получите список миссий для каждой модели дронов, которые были в файле pilot_path.json,
 # и выведите на экран модель дрона и количество миссий, которые он отлетал
@@ -105,10 +105,10 @@ def count_missions_for_drone(filepath):
 
 
 # вывод результата (допишите код)
-# drones_miss_num = count_missions_for_drone(filepath)
+drones_miss_num = count_missions_for_drone(filepath)
 
-# for drone, missions_num in drones_miss_num.items():
-#     print(f'Дрон {drone} отлетал {missions_num} миссий')
+for drone, missions_num in drones_miss_num.items():
+    print(f'Дрон {drone} отлетал {missions_num} миссий')
 
 # =====================================
 # ЗАДАНИЕ 3: Создание классов
@@ -197,10 +197,10 @@ drones = {
 # Информация о дроне DJI Mavic 2 Pro: масса 903, производитель DJI, количество миссий 6
 
 # ВАШ КОД:
-# user_unput = input("Введите модель дрона (полностью) в любом регистре\n")
+user_unput = input("Введите модель дрона (полностью) в любом регистре\n")
 
-# drone = drones[user_unput]
+drone = drones[user_unput]
 
-# print(
-#     drone.get_info()
-# )
+print(
+    drone.get_info()
+)

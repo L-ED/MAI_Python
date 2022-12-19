@@ -108,7 +108,7 @@ def task4(drone_list, drone_weights, flight_mode):
     mustnt_be_registered = []
 
     for product in products_map:
-        if product[1]>150 and flight_mode==1:
+        if (product[1]>150 and flight_mode==1) or flight_mode!=1:
             print(f"Drone {product[0]}, with weight {product[1]} must be registered in flight mode {flight_mode}")
             must_be_registered.append(product)
         else:

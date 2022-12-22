@@ -101,18 +101,18 @@ def task3(drone_list, drone_weights):
     # return must_be_registered, mustnt_be_registered
 
 
-def task4(drone_list, drone_weights, flight_mode):
+def task4(drone_list, drone_weights, flight_zone, flight_height):
 
     products_map = zip(drone_list, drone_weights)
     must_be_registered = []
     mustnt_be_registered = []
 
     for product in products_map:
-        if (product[1]>150 and flight_mode==1) or flight_mode!=1:
-            print(f"Drone {product[0]}, with weight {product[1]} must be registered in flight mode {flight_mode}")
+        if flight_height>150 or (product[1]>150 and flight_zone==0) or flight_zone!=0:
+            print(f"Drone {product[0]}, with weight {product[1]} MUST be registered in flight mode {flight_zone}")
             must_be_registered.append(product)
         else:
-            print(f"Drone {product[0]}, with weight {product[1]} can be not registered in flight mode {flight_mode}")
+            print(f"Drone {product[0]}, with weight {product[1]} can be not registered in flight mode {flight_zone}")
             mustnt_be_registered.append(product)
 
 

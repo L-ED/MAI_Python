@@ -46,7 +46,7 @@ def count_missions(filepath):
 
         pilot_missions_num[pilot] = len(pilots_dict[pilot]["missions"])
 
-    pilot_missions_num = dict(sorted(pilot_missions_num.items(), key=lambda pilot: pilot[1]))
+    pilot_missions_num = dict(sorted(pilot_missions_num.items(), key=lambda pilot: pilot[1], reverse=True))
 
     return pilot_missions_num
 
@@ -73,7 +73,7 @@ def take_drones_models(filepath):
 
 
 # вывод результата (допишите код)
-print(f'Полеты совершались на дронах следующих моделей: {", ".join(take_drones_models(filepath))}')
+# print(f'Полеты совершались на дронах следующих моделей: {", ".join(take_drones_models(filepath))}')
 
 # TODO 2-3) Получите список миссий для каждой модели дронов, которые были в файле pilot_path.json,
 # и выведите на экран модель дрона и количество миссий, которые он отлетал
@@ -105,10 +105,10 @@ def count_missions_for_drone(filepath):
 
 
 # вывод результата (допишите код)
-drones_miss_num = count_missions_for_drone(filepath)
+# drones_miss_num = count_missions_for_drone(filepath)
 
-for drone, missions_num in drones_miss_num.items():
-    print(f'Дрон {drone} отлетал {missions_num} миссий')
+# for drone, missions_num in drones_miss_num.items():
+#     print(f'Дрон {drone} отлетал {missions_num} миссий')
 
 # =====================================
 # ЗАДАНИЕ 3: Создание классов
@@ -135,6 +135,10 @@ class UAV:
 
     @missions.setter
     def missions(self, mission):
+        self._missions = mission
+
+    @missions.setter
+    def register_mission(self, mission):
         self._missions.append(mission)
 
     def count_missions(self):
@@ -142,7 +146,7 @@ class UAV:
 
 
 class MultirotorUAV(Aircraft, UAV):
-    def __init__(self, weight, model, brand):
+    def __init__(self, model, brand, weight):
         super().__init__(weight)
         UAV.__init__(self)
         self._model = model
@@ -197,10 +201,53 @@ drones = {
 # Информация о дроне DJI Mavic 2 Pro: масса 903, производитель DJI, количество миссий 6
 
 # ВАШ КОД:
-user_unput = input("Введите модель дрона (полностью) в любом регистре\n")
+# user_unput = input("Введите модель дрона (полностью) в любом регистре\n")
 
-drone = drones[user_unput]
+# drone = drones[user_unput]
 
-print(
-    drone.get_info()
-)
+# print(
+#     drone.get_info()
+# )
+
+
+def take_missions_for_drone(filepath):
+
+    pilots_dict = json_reader(filepath)
+
+    drones_missions_count = {}
+
+    for pilot_dict in pilots_dict.values():
+        for mission in pilot_dict["missions"]:
+            drone_name = mission["drone"]
+            if not drone_name in drones_missions_count:
+                drones_missions_count[drone_name] = [mission["mission"]]
+            else:
+                drones_missions_count[drone_name].append([mission["mission"]])
+
+    return drones_missions_count
+
+
+
+def fill_database(drone_catalog, flights_json):
+
+    drones_missions = take_missions_for_drone(flights_json)
+
+    drones_inner_base = {}
+    for drone_name, drone_info in drone_catalog.items():
+        drones_inner_base[drone_name.lower()] = MultirotorUAV(
+                model=drone_name,
+                brand=drone_info["brand"],
+                weight=drone_info["weight"]
+            )
+        drones_inner_base[drone_name.lower()].missions = drones_missions[drone_name]
+
+    return drones_inner_base
+
+
+
+
+
+
+# def check_drone(drone_name):
+
+#     name = 

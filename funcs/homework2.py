@@ -156,7 +156,7 @@ class MultirotorUAV(Aircraft, UAV):
 
         print(
             f"Model :\n\t",
-            f"vendor {self._brand} model {self._model}\n\t",
+            f"Vendor {self._brand}\n\t Model {self._model}\n\t",
             f"weight {self._weight}\n\t",
             f"missions num {len(self._missions)}"
         )
@@ -248,6 +248,7 @@ def fill_database(drone_catalog, flights_json):
 
 
 
-# def check_drone(drone_name):
+def check_drone(drone_name, database):
 
-#     name = 
+    database[drone_name.lower()].get_info()
+    
